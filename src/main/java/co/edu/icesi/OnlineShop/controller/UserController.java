@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,9 @@ public class UserController implements UserAPI {
 
 	@Autowired
     private UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getUsers() {
@@ -71,7 +75,9 @@ public class UserController implements UserAPI {
         }
 
         try {
-            userNew = userService.createUser(user);
+            userNew = user;
+            userNew.setPassword(passwordEncoder.encode(user.getPassword()));
+            userNew = userService.createUser(userNew);
         } catch(DataAccessException e) {
             response.put("message", "Error when inserting into the database");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

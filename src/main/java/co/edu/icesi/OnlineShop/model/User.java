@@ -37,7 +37,7 @@ public class User {
     private String email;
 
     @NotEmpty(message ="can not be empty")
-    @Size(min=8, max=50, message="must be between 8 and 50 characters")
+    @Size(min=8, max=250, message="must be between 8 and 50 characters")
     @Column(name = "password")
     private String password;
 
@@ -50,6 +50,11 @@ public class User {
     @JsonIgnoreProperties({"cliente","hibernateLazyInitializer","handler"})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
     private List<Order> orders;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "usuarios_roles",joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"),uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","role_id"})})
+    private List<Role> roles;
 
     @PrePersist
     public void generateId(){

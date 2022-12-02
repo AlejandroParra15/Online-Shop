@@ -2,6 +2,7 @@ package co.edu.icesi.OnlineShop.api;
 
 import co.edu.icesi.OnlineShop.model.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,14 +10,18 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@Secured({"ROLE_ADMIN"})
 @RequestMapping("/shop/users")
 public interface UserAPI {
+
 
     @GetMapping
     public List<User> getUsers();
 
+
     @GetMapping("/{userId}")
     public ResponseEntity<?>  getUser(@PathVariable UUID userId);
+
 
     @PostMapping()
     public ResponseEntity<?> createUser(@Valid @RequestBody User user, BindingResult result);

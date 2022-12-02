@@ -2,6 +2,7 @@ package co.edu.icesi.OnlineShop.api;
 
 import co.edu.icesi.OnlineShop.model.Item;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,6 @@ public interface ItemAPI {
 
     @GetMapping("/{itemId}")
     public ResponseEntity<?> getItem(@PathVariable UUID itemId);
-
     @PostMapping()
     public ResponseEntity<?> createItem(@Valid @RequestBody Item item, BindingResult result);
 
