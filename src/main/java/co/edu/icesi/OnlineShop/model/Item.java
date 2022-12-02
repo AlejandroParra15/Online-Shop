@@ -28,6 +28,9 @@ public class Item {
     @NotEmpty(message ="can not be empty")
     private String description;
 
+    @NotEmpty(message ="can not be empty")
+    private String image;
+
     @NotNull(message ="can not be empty")
     private double price;
 
