@@ -14,11 +14,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import lombok.AllArgsConstructor;
 
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @AllArgsConstructor
 public class UserController implements UserAPI {
